@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Форма обратной связи";
+}
+<hgroup>
+    <h2>Форма обратной связи</h2>
+    <h3 data-bind="text: message"></h3>
+</hgroup>
+<div data-bind="ifnot: isbusy, ifnot: issended">
+    <p>
+        <span>Тема сообщения:</span><br />
+        <input type="text" data-bind="value: feedback.subject" /><br />
+        <br />
+
+        <span>Ваше имя:</span><br />
+        <input type="text" data-bind="value: feedback.username" /><br />
+        <br />
+
+        <span>Электроящик:</span><br />
+        <input type="text" data-bind="value: feedback.emailadrress" /><br />
+        <br />
+
+        <span>Сообщение:</span><br />
+        <textarea data-bind="value: feedback.message"></textarea><br />
+        <br />
+
+        <button data-bind="click:send, enable: errors().isValid()">отправить</button>
+    </p>
+    <p>
+        <span data-bind="text: JSON.stringify(ko.toJS($data), null, 2)"></span>
+    </p>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/site")
+    <script src="~/Scripts/app/site.vm.feedback.js"></script>
+}

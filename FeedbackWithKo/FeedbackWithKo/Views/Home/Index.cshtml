@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Опрос на сайте";
+}
+
+<div data-bind="ifnot: poll.answer">
+    <h2 data-bind="text: poll.question"></h2>
+    <h4 data-bind="text: message"></h4>
+    <div data-bind="foreach: poll.answers">
+        <div data-bind="click: $parent.poll.setSelected" class="big">
+            <input type="radio" value="true" data-bind="checked: isSelected().toString()" class="poll" />
+            <span data-bind="text: name, css: {'selected': isSelected}"></span>
+        </div>
+    </div>
+    <p>
+        <button data-bind="click: save">голосовать</button>
+    </p>
+</div>
+<div data-bind="if: poll.answer">
+    <h2 data-bind="text: poll.question()+' '+poll.answer()"></h2>
+    <div data-bind="foreach: poll.answers">
+        <span data-bind="text: name"></span>
+        <div data-bind="progressbar: {value: votes(), max: $parent.poll.max()}"></div>
+        <br />
+    </div>
+</div>
+
+<h2>Debug info</h2>
+<p>
+    <pre>
+        <span data-bind="text: JSON.stringify(ko.toJS($data), null, 2)"></span>
+    </pre>
+</p>
+@section scripts {
+    @Scripts.Render("~/bundles/site")
+    <script src="~/Scripts/app/site.vm.polls.js"></script>
+}
